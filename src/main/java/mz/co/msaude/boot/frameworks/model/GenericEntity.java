@@ -13,6 +13,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import mz.co.msaude.boot.frameworks.util.LocalDateTimeAdapter;
 
 /**
  * @author Stélio Moiane
@@ -35,12 +38,14 @@ public class GenericEntity implements Serializable {
 	private String createdBy;
 
 	@Column(name = "CREATED_AT", nullable = false)
+	@XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
 	private LocalDateTime createdAt;
 
 	@Column(name = "UPDATED_BY", length = 50)
 	private String updatedBy;
 
 	@Column(name = "UPDATED_AT")
+	@XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
 	private LocalDateTime updatedAt;
 
 	@Enumerated(EnumType.STRING)
