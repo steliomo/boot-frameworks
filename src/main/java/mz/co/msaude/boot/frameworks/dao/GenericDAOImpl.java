@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
@@ -47,7 +48,21 @@ public class GenericDAOImpl<T extends GenericEntity, V extends Serializable> imp
 
 	@Override
 	public T findByUuid(final String uuid) throws BusinessException {
-		return null;
+
+		final TypedQuery<T> query = this.entityManager
+		        .createQuery("SELECT e FROM " + this.clazz.getName() + " e WHERE e.uuid = :uuid", this.clazz)
+		        .setParameter("uuid", uuid);
+
+		T entiy = null;
+
+		try {
+			entiy = query.getSingleResult();
+		}
+		catch (final NoResultException e) {
+			throw new BusinessException(e.getMessage());
+		}
+
+		return entiy;
 	}
 
 	@Override

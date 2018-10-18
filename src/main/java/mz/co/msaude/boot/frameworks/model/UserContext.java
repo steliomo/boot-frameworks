@@ -7,7 +7,6 @@ import java.time.LocalDate;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import br.com.six2six.bfgex.Gender;
 import mz.co.msaude.boot.frameworks.util.LocalDateAdapter;
 
 /**
@@ -21,6 +20,8 @@ public class UserContext {
 	private String name;
 
 	private String surname;
+
+	private String fullName;
 
 	private Gender gender;
 
@@ -59,6 +60,23 @@ public class UserContext {
 		this.surname = surname;
 	}
 
+	public void setFullName() {
+		this.fullName = this.name + " " + this.surname;
+	}
+
+	public void setFullName(final String fullName) {
+		final String[] split = fullName.split(" ");
+
+		this.name = split[0];
+		this.surname = split[1];
+
+		this.fullName = fullName;
+	}
+
+	public String getFullName() {
+		return this.fullName;
+	}
+
 	public Gender getGender() {
 		return this.gender;
 	}
@@ -85,6 +103,10 @@ public class UserContext {
 
 	public String getUsername() {
 		return this.username;
+	}
+
+	public void setUsername() {
+		this.username = this.phoneNumber;
 	}
 
 	public void setUsername(final String username) {
