@@ -160,4 +160,31 @@ public class GenericDAOImpl<T extends GenericEntity, V extends Serializable> imp
 
 		return query.getSingleResult();
 	}
+
+	@Override
+	public Long count(final EntityStatus entityStatus) throws BusinessException {
+		return this.entityManager
+		        .createQuery("SELECT COUNT(e) FROM " + this.clazz.getName() + " e WHERE e.entityStatus = :entityStatus",
+		                Long.class)
+		        .setParameter("entityStatus", entityStatus).getSingleResult();
+	}
+
+	@Override
+	public Long count() throws BusinessException {
+		return this.entityManager.createQuery("SELECT COUNT(e) FROM " + this.clazz.getName() + " e", Long.class)
+		        .getSingleResult();
+	}
+
+	@Override
+	public <Y> TypedQuery<Y> findByQuery(final String name, final Map<String, ? extends Object> params,
+	        final Class<Y> clazz) throws BusinessException {
+
+		final TypedQuery<Y> query = this.entityManager.createNamedQuery(name, clazz);
+
+		for (final Map.Entry<String, ? extends Object> param : params.entrySet()) {
+			query.setParameter(param.getKey(), param.getValue());
+		}
+
+		return query;
+	}
 }
