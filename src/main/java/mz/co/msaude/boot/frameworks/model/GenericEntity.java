@@ -104,7 +104,16 @@ public class GenericEntity implements Serializable {
 		return this.entityStatus;
 	}
 
+	@Deprecated
 	public void setEntityStatus(final EntityStatus entityStatus) {
 		this.entityStatus = entityStatus;
+	}
+
+	public void inactive() {
+		this.entityStatus = EntityStatus.INACTIVE;
+	}
+
+	public void active() {
+		this.entityStatus = EntityStatus.ACTIVE;
 	}
 }

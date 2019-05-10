@@ -69,7 +69,7 @@ public class GenericDAOImpl<T extends GenericEntity, V extends Serializable> imp
 	public T create(final UserContext context, final T entity) throws BusinessException {
 		entity.setCreatedBy(context.getUuid());
 		entity.setCreatedAt(LocalDateTime.now());
-		entity.setEntityStatus(EntityStatus.ACTIVE);
+		entity.active();
 
 		if (entity.getUuid() == null) {
 			entity.setUuid(UuidFactory.generate());
