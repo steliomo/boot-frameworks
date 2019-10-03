@@ -7,12 +7,15 @@ import java.time.LocalDate;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import mz.co.msaude.boot.frameworks.util.LocalDateAdapter;
 
 /**
  * @author Stélio Moiane
  *
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserContext {
 
 	private String uuid;
