@@ -3,7 +3,7 @@
 
 	<groupId>mz.co.msaude</groupId>
 	<artifactId>boot-frameworks</artifactId>
-	<version>1.0.3-SNAPSHOT</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<name>Boot Frameworks</name>
 	<description>Setup Configuration for spring boot projects</description>
 
