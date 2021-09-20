@@ -3,7 +3,7 @@
 
 	<groupId>mz.co.msaude</groupId>
 	<artifactId>boot-frameworks</artifactId>
-	<version>1.0.2</version>
+	<version>1.0.3-SNAPSHOT</version>
 	<name>Boot Frameworks</name>
 	<description>Setup Configuration for spring boot projects</description>
 
@@ -32,7 +32,7 @@
 
 	<scm>
 		<connection>scm:git:https://github.com/steliomo/boot-frameworks.git</connection>
-		<tag>boot-frameworks-1.0.2</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<dependencies>
