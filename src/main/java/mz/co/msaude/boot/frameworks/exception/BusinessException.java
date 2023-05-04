@@ -18,4 +18,7 @@ public class BusinessException extends Exception {
 		super(message);
 	}
 
+	public BusinessException(String message, String... args) {
+		super(message);
+	}
 }
