@@ -9,5 +9,7 @@ package mz.co.msaude.boot.frameworks.mapper;
  */
 public interface EntityMapper<E, D> {
 
-	E mapToEntity(D domain);
+	E toEntity(D domain);
+
+	D toDomain(E entity);
 }

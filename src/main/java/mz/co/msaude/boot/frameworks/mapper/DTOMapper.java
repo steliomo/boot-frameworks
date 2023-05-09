@@ -7,8 +7,10 @@ package mz.co.msaude.boot.frameworks.mapper;
  * @author Stélio Moiane
  *
  */
-public interface DTOMapper<D, M> {
+public interface DTOMapper<DTO, D> {
 
-	M mapToDTO(D domain);
+	DTO toDTO(D domain);
+
+	D toDomain(DTO dto);
 
 }
