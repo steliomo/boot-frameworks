@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 
 import mz.co.msaude.boot.frameworks.exception.BusinessException;
 import mz.co.msaude.boot.frameworks.model.EntityStatus;
@@ -50,21 +51,21 @@ public class GenericDAOImpl<T extends GenericEntity, V extends Serializable> imp
 	public T findByUuid(final String uuid) throws BusinessException {
 
 		final TypedQuery<T> query = this.entityManager
-		        .createQuery("SELECT e FROM " + this.clazz.getName() + " e WHERE e.uuid = :uuid", this.clazz)
-		        .setParameter("uuid", uuid);
+				.createQuery("SELECT e FROM " + this.clazz.getName() + " e WHERE e.uuid = :uuid", this.clazz)
+				.setParameter("uuid", uuid);
 
 		T entiy = null;
 
 		try {
 			entiy = query.getSingleResult();
-		}
-		catch (final NoResultException e) {
+		} catch (final NoResultException e) {
 			throw new BusinessException(e.getMessage());
 		}
 
 		return entiy;
 	}
 
+	@Transactional(rollbackOn = BusinessException.class)
 	@Override
 	public T create(final UserContext context, final T entity) throws BusinessException {
 		entity.setCreatedBy(context.getUuid());
@@ -80,6 +81,7 @@ public class GenericDAOImpl<T extends GenericEntity, V extends Serializable> imp
 		return entity;
 	}
 
+	@Transactional(rollbackOn = BusinessException.class)
 	@Override
 	public T update(final UserContext context, final T entity) throws BusinessException {
 		entity.setUpdatedBy(context.getUuid());
@@ -98,7 +100,7 @@ public class GenericDAOImpl<T extends GenericEntity, V extends Serializable> imp
 
 	@Override
 	public List<T> findByNamedQuery(final String queryName, final Map<String, ? extends Object> params)
-	        throws BusinessException {
+			throws BusinessException {
 
 		final TypedQuery<T> query = this.entityManager.createNamedQuery(queryName, this.clazz);
 
@@ -111,7 +113,7 @@ public class GenericDAOImpl<T extends GenericEntity, V extends Serializable> imp
 
 	@Override
 	public T findSingleByNamedQuery(final String name, final Map<String, ? extends Object> params)
-	        throws BusinessException {
+			throws BusinessException {
 
 		final TypedQuery<T> query = this.entityManager.createNamedQuery(name, this.clazz);
 
@@ -124,7 +126,7 @@ public class GenericDAOImpl<T extends GenericEntity, V extends Serializable> imp
 
 	@Override
 	public TypedQuery<T> findByQuery(final String name, final Map<String, ? extends Object> params)
-	        throws BusinessException {
+			throws BusinessException {
 
 		final TypedQuery<T> query = this.entityManager.createNamedQuery(name, this.clazz);
 
@@ -137,7 +139,7 @@ public class GenericDAOImpl<T extends GenericEntity, V extends Serializable> imp
 
 	@Override
 	public <Y> List<Y> findByNamedQuery(final String queryName, final Map<String, ? extends Object> params,
-	        final Class<Y> clazz) throws BusinessException {
+			final Class<Y> clazz) throws BusinessException {
 
 		final TypedQuery<Y> query = this.entityManager.createNamedQuery(queryName, clazz);
 
@@ -150,7 +152,7 @@ public class GenericDAOImpl<T extends GenericEntity, V extends Serializable> imp
 
 	@Override
 	public <Y> Y findSingleByNamedQuery(final String queryName, final Map<String, ? extends Object> params,
-	        final Class<Y> clazz) throws BusinessException {
+			final Class<Y> clazz) throws BusinessException {
 
 		final TypedQuery<Y> query = this.entityManager.createNamedQuery(queryName, clazz);
 
@@ -164,20 +166,20 @@ public class GenericDAOImpl<T extends GenericEntity, V extends Serializable> imp
 	@Override
 	public Long count(final EntityStatus entityStatus) throws BusinessException {
 		return this.entityManager
-		        .createQuery("SELECT COUNT(e) FROM " + this.clazz.getName() + " e WHERE e.entityStatus = :entityStatus",
-		                Long.class)
-		        .setParameter("entityStatus", entityStatus).getSingleResult();
+				.createQuery("SELECT COUNT(e) FROM " + this.clazz.getName() + " e WHERE e.entityStatus = :entityStatus",
+						Long.class)
+				.setParameter("entityStatus", entityStatus).getSingleResult();
 	}
 
 	@Override
 	public Long count() throws BusinessException {
 		return this.entityManager.createQuery("SELECT COUNT(e) FROM " + this.clazz.getName() + " e", Long.class)
-		        .getSingleResult();
+				.getSingleResult();
 	}
 
 	@Override
 	public <Y> TypedQuery<Y> findByQuery(final String name, final Map<String, ? extends Object> params,
-	        final Class<Y> clazz) throws BusinessException {
+			final Class<Y> clazz) throws BusinessException {
 
 		final TypedQuery<Y> query = this.entityManager.createNamedQuery(name, clazz);
 
